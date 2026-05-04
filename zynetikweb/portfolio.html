@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zynetik Web | Réalisations</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .portfolio-filters {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: var(--transition-bounce);
+            backdrop-filter: blur(8px);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: #000;
+            font-weight: 600;
+            border-color: transparent;
+            box-shadow: 0 4px 18px rgba(0, 210, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .portfolio-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-bounce);
+            padding: 1rem;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(0, 210, 255, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 210, 255, 0.1);
+        }
+
+        .portfolio-img-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 60%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-img-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: grayscale(20%);
+        }
+
+        .portfolio-card:hover .portfolio-img-wrapper img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(5, 10, 21, 0.9), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-badge {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.6rem;
+            background: rgba(0, 210, 255, 0.2);
+            color: var(--accent-primary);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 210, 255, 0.3);
+        }
+
+        .portfolio-info {
+            padding: 0 0.5rem 0.5rem;
+        }
+
+        .portfolio-tag {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.4rem;
+            font-family: var(--font-heading);
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-info p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+        }
+
+        .portfolio-card:hover .portfolio-link {
+            gap: 0.8rem;
+        }
+
+        @media(max-width:768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="promo-banner">
+        <span class="promo-dot"></span>
+        <span class="promo-text">- 10% sur votre première commande avec le code <span class="promo-code">BIENVENUE2026</span></span>
+    </div>
+
+    <header class="topbar">
+        <a href="index.html" class="logo-container">
+            <svg viewBox="0 0 40 40" width="36" height="36" fill="none">
+                <path d="M5 10H25L15 30H5L15 10Z" fill="#00d2ff" />
+                <path d="M18 15H35L25 30H18L28 15Z" fill="#3a7bd5" />
+                <circle cx="8" cy="25" r="2" fill="#3a7bd5" />
+                <circle cx="12" cy="25" r="2" fill="#3a7bd5" />
+                <circle cx="8" cy="29" r="2" fill="#3a7bd5" />
+            </svg>
+            <div class="logo-text">Zynetik <span>Web</span></div>
+        </a>
+        <div class="lang-switcher-header"></div>
+        <a href="register.html" class="login-btn magnetic-btn"><i data-lucide="user"></i> <span data-i18n="connexion">Connexion</span></a>
+        <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </header>
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a href="index.html"><i data-lucide="layout-dashboard"></i> <span data-i18n="home">Accueil</span></a>
+        <a href="services.html"><i data-lucide="cpu"></i> <span data-i18n="services">Services & Hébergement</span></a>
+        <a href="portfolio.html" class="active"><i data-lucide="rocket"></i> <span data-i18n="portfolio">Réalisations</span></a>
+        <a href="contact.html"><i data-lucide="message-square"></i> <span data-i18n="contact">Contact</span></a>
+        </nav>
+        <div class="sidebar-bottom"><a href="contact.html" class="cta-mini magnetic-btn">Obtenir un devis</a></div>
+    </aside>
+
+    <main class="main-content">
+        <section class="section-padding" style="padding-top: 0.5rem;">
+            <div class="container">
+                <div class="page-header reveal" style="text-align: center; border: none; margin-bottom: 2rem;">
+                    <span class="badge" data-i18n="port_badge">Portfolio</span>
+                    <h1 class="glow-text" style="font-family: var(--font-heading); font-size: 3rem;" data-i18n="port_title">Infrastructures &
+                        <span class="text-blue">Sites Web</span></h1>
+                    <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;" data-i18n="port_desc">
+                        Découvrez nos récents déploiements, alliant design sur-mesure et hébergement haute performance.
+                    </p>
+                </div>
+
+                <div class="portfolio-filters reveal">
+                    <button class="filter-btn active magnetic-btn" data-filter="all" data-i18n="port_filter_all">Tous les projets</button>
+                    <button class="filter-btn magnetic-btn" data-filter="vitrine" data-i18n="port_filter_vitrine">Vitrines & Corporate</button>
+                    <button class="filter-btn magnetic-btn" data-filter="ecommerce" data-i18n="port_filter_ecommerce">E-commerce</button>
+                    <button class="filter-btn magnetic-btn" data-filter="surmesure" data-i18n="port_filter_app">Applications Web</button>
+                </div>
+
+                <div class="portfolio-grid stagger-children">
+                    <!-- Project 1 -->
+                    <div class="portfolio-card" data-category="vitrine">
+                        <div class="portfolio-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80"
+                                alt="Agence de Voyage">
+                            <div class="portfolio-overlay">
+                                <div class="tech-stack">
+                                    <span class="tech-badge">WordPress</span>
+                                    <span class="tech-badge">Hébergement NVMe</span>
+                                    <span class="tech-badge">Litespeed Cache</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-tag">Site Vitrine Hautes Perfs</span>
+                            <h3>Agence de Voyage Luxe</h3>
+                            <p>Refonte totale avec optimisation des temps de chargement (0.4s) pour l'affichage de
+                                galeries d'images HD.</p>
+                            <a href="#" class="portfolio-link">Voir le site<i data-lucide="arrow-right"
+                                    style="width:14px;height:14px;"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="portfolio-card" data-category="ecommerce">
+                        <div class="portfolio-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80"
+                                alt="Mode">
+                            <div class="portfolio-overlay">
+                                <div class="tech-stack">
+                                    <span class="tech-badge">WooCommerce</span>
+                                    <span class="tech-badge">Serveur Dédié</span>
+                                    <span class="tech-badge">Redis</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-tag">E-Commerce & Serveur Dédié</span>
+                            <h3>Boutique Mode Urbaine</h3>
+                            <p>Boutique capable de supporter plus de 10 000 visiteurs simultanés lors des lancements de
+                                collections.</p>
+                            <a href="#" class="portfolio-link">Voir le <i data-lucide="arrow-right"
+                                    style="width:14px;height:14px;"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="portfolio-card" data-category="surmesure">
+                        <div class="portfolio-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+                                alt="SaaS">
+                            <div class="portfolio-overlay">
+                                <div class="tech-stack">
+                                    <span class="tech-badge">React.js</span>
+                                    <span class="tech-badge">Node.js</span>
+                                    <span class="tech-badge">Docker</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-info">
+                            <span class="portfolio-tag">Application SaaS & Cloud</span>
+                            <h3>Dashboard Analytique</h3>
+                            <p>Développement d'une interface sur-mesure et déploiement sur une architecture Docker
+                                conteneurisée.</p>
+                            <a href="#" class="portfolio-link">Voir le site <i data-lucide="arrow-right"
+                                    style="width:14px;height:14px;"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer
+            style="border-top: 1px solid var(--glass-border); padding: 40px 0; text-align: center; color: var(--text-secondary); background: rgba(5, 10, 21, 0.8); backdrop-filter: blur(10px);">
+            <div class="container">
+                <p>&copy; 2026 Zynetik Web. Hébergement & Création Haute Performance en France.</p>
+            </div>
+        </footer>
+    </main>
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const f = btn.dataset.filter;
+                document.querySelectorAll('.portfolio-card').forEach((c, i) => {
+                    if (f === 'all' || c.dataset.category === f) {
+                        c.style.display = '';
+                        c.style.opacity = '0';
+                        c.style.transform = 'translateY(15px)';
+                        setTimeout(() => {
+                            c.style.transition = 'all 0.4s ease';
+                            c.style.opacity = '1';
+                            c.style.transform = 'translateY(0)';
+                        }, i * 80);
+                    } else {
+                        c.style.opacity = '0';
+                        setTimeout(() => { c.style.display = 'none'; }, 250);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
